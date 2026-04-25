@@ -15,7 +15,10 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.omer.cocukoyna"
+      "bundleIdentifier": "com.omer.cocukoyna",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.omer.cocukoyna",
@@ -38,6 +41,12 @@
           "paymentProvider": "App Store"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a6dcc15b-4397-421b-8718-a5116840a0fc"
+      }
+    }
   }
 }
