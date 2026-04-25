@@ -9,8 +9,7 @@ import {
   purchaseErrorListener,
   purchaseUpdatedListener,
   requestPurchase,
-  type ProductPurchase,
-  type SubscriptionPurchase,
+  type Purchase,
 } from 'react-native-iap';
 
 const PREMIUM_KEY = 'cocukoyna_premium';
@@ -47,8 +46,8 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
     initConnection()
       .then(() => {
         purchaseUpdateRef.current = purchaseUpdatedListener(
-          async (purchase: ProductPurchase | SubscriptionPurchase) => {
-            if (purchase.transactionReceipt) {
+          async (purchase: Purchase) => {
+            if (purchase.transactionId) {
               await premiumYap();
               await finishTransaction({ purchase, isConsumable: false });
             }

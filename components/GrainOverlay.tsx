@@ -8,9 +8,8 @@ export function GrainOverlay({ opacity }: Props) {
   return (
     <Image
       source={require('../assets/noise.png')}
-      style={[styles.overlay, { opacity }]}
+      style={[styles.overlay, { opacity }, { pointerEvents: 'none' } as any]}
       resizeMode="cover"
-      pointerEvents="none"
     />
   );
 }
