@@ -18,7 +18,6 @@ const TABI = {
   kutla:  require('../assets/tabi/tabi-5-kutla.png'),
 };
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { type Sure } from '../context/AktiviteContext';
 import { useAktivite } from '../context/AktiviteContext';
 import { YAS_GRUPLARI, type YasGrubu } from '../data/aktiviteler';
 import { R } from '../constants/renkler';
@@ -29,18 +28,11 @@ import { useStrings } from '../i18n';
 export default function OnboardingEkrani() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { yasSecimi, sureSecimi } = useAktivite();
+  const { yasSecimi } = useAktivite();
   const [ekran, setEkran] = useState(1);
   const [secilenYas, setSecilenYas] = useState<YasGrubu | null>(null);
-  const [secilenSure, setSecilenSure] = useState<Sure | null>(null);
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const S = useStrings();
-
-  const SURE_SECENEKLERI: { id: Sure; emoji: string; baslik: string; alt: string }[] = [
-    { id: '5',  emoji: '⚡',  baslik: S.sure_label['5'].baslik,  alt: S.sure_label['5'].alt },
-    { id: '15', emoji: '☀️', baslik: S.sure_label['15'].baslik, alt: S.sure_label['15'].alt },
-    { id: '30', emoji: '🌟', baslik: S.sure_label['30'].baslik, alt: S.sure_label['30'].alt },
-  ];
 
   function sonrakiEkran(hedef: number) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -52,24 +44,22 @@ export default function OnboardingEkrani() {
   }
 
   async function tamamla() {
-    if (!secilenYas || !secilenSure) return;
+    if (!secilenYas) return;
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     yasSecimi(secilenYas);
-    sureSecimi(secilenSure);
     await AsyncStorage.setItem('onboarding_done', 'true');
     router.replace('/(tabs)/');
   }
 
   const yasInfo = secilenYas ? YAS_GRUPLARI.find(y => y.id === secilenYas) : null;
-  const sureInfo = secilenSure ? SURE_SECENEKLERI.find(s => s.id === secilenSure) : null;
 
   return (
     <View style={[styles.kaplama, { paddingTop: insets.top, paddingBottom: insets.bottom + 20 }]}>
       <GrainOverlay opacity={0.04} />
-      {/* Progress dots — ekran 2, 3, 4 */}
+      {/* Progress dots — ekran 2, 3 */}
       {ekran > 1 && (
         <View style={styles.dotsRow}>
-          {[2, 3, 4].map(n => (
+          {[2, 3].map(n => (
             <View key={n} style={[styles.dot, ekran >= n && styles.dotAktif]} />
           ))}
         </View>
@@ -130,49 +120,8 @@ export default function OnboardingEkrani() {
           </View>
         )}
 
-        {/* EKRAN 3 — Süre Seçimi */}
+        {/* EKRAN 3 — Hazır! */}
         {ekran === 3 && (
-          <View style={styles.ekranKaplama}>
-            <View style={styles.tabiKucukRow}>
-              <Image source={TABI.dusun} style={styles.tabiKucukImg} resizeMode="contain" />
-              <View style={styles.balonKutu}>
-                <Text style={styles.balonYazi}>{S.onb_kac_sure}</Text>
-              </View>
-            </View>
-
-            <View style={styles.sureListesi}>
-              {SURE_SECENEKLERI.map(s => {
-                const secili = secilenSure === s.id;
-                return (
-                  <TouchableOpacity
-                    key={s.id}
-                    style={[styles.sureKart, secili && styles.sureKartSecili]}
-                    onPress={() => setSecilenSure(s.id)}
-                    activeOpacity={0.78}
-                  >
-                    <Text style={styles.sureEmoji}>{s.emoji}</Text>
-                    <View style={styles.sureMetin}>
-                      <Text style={[styles.sureBaslik, secili && styles.sureMetinSecili]}>{s.baslik}</Text>
-                      <Text style={[styles.sureAlt, secili && styles.sureAltSecili]}>{s.alt}</Text>
-                    </View>
-                    {secili && <Text style={styles.sureTik}>✓</Text>}
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-
-            <TouchableOpacity
-              style={[styles.butonAna, !secilenSure && styles.butonPasif]}
-              onPress={() => secilenSure && sonrakiEkran(4)}
-              activeOpacity={0.85}
-            >
-              <Text style={styles.butonAnaYazi}>{S.onb_devam}</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {/* EKRAN 4 — Hazır! */}
-        {ekran === 4 && (
           <View style={styles.ekranKaplama}>
             <View style={styles.merkez}>
               <Image source={TABI.zipla} style={styles.tabiBuyuk} resizeMode="contain" />
@@ -184,12 +133,11 @@ export default function OnboardingEkrani() {
                     <Text style={styles.ozetYazi}>{S.onb_ozet_yas(S.yas_label[yasInfo.id]?.baslik ?? yasInfo.baslik)}</Text>
                   </View>
                 )}
-                {sureInfo && (
-                  <View style={styles.ozetSatir}>
-                    <Text style={styles.ozetEmoji}>{sureInfo.emoji}</Text>
-                    <Text style={styles.ozetYazi}>{S.onb_ozet_sure(S.sure_label[sureInfo.id]?.baslik ?? sureInfo.baslik)}</Text>
-                  </View>
-                )}
+              </View>
+              <View style={styles.faydalar}>
+                {S.onb_faydalar.map((f, i) => (
+                  <Text key={i} style={styles.faydaSatir}>{f}</Text>
+                ))}
               </View>
             </View>
             <TouchableOpacity style={styles.butonAna} onPress={tamamla} activeOpacity={0.85}>
@@ -353,63 +301,21 @@ const styles = StyleSheet.create({
     color: R.turuncuAcik,
   },
 
-  // Süre listesi
-  sureListesi: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: 12,
+  // Faydalar (Ekran 3)
+  faydalar: {
+    marginTop: 12,
+    gap: 7,
+    alignSelf: 'stretch',
   },
-  sureKart: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.14)',
-    borderRadius: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 18,
-    gap: 14,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.35)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-  },
-  sureKartSecili: {
-    backgroundColor: R.beyaz,
-    borderColor: R.beyaz,
-    shadowOpacity: 0.18,
-    shadowRadius: 14,
-  },
-  sureEmoji: {
-    fontSize: 30,
-  },
-  sureMetin: {
-    flex: 1,
-  },
-  sureBaslik: {
-    fontSize: 17,
-    fontWeight: '800',
-    color: 'rgba(255,255,255,0.95)',
-  },
-  sureMetinSecili: {
-    color: R.turuncu,
-  },
-  sureAlt: {
-    fontSize: 12,
+  faydaSatir: {
+    fontSize: 13,
     fontWeight: '600',
-    color: 'rgba(255,255,255,0.65)',
-    marginTop: 2,
-  },
-  sureAltSecili: {
-    color: R.turuncuAcik,
-  },
-  sureTik: {
-    fontSize: 20,
-    color: R.turuncu,
-    fontWeight: '800',
+    color: 'rgba(255,255,255,0.78)',
+    textAlign: 'center',
+    lineHeight: 20,
   },
 
-  // Özet (Ekran 4)
+  // Özet (Ekran 3)
   ozet: {
     marginTop: 20,
     gap: 10,

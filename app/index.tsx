@@ -10,7 +10,7 @@ export default function IndexEkrani() {
   useEffect(() => {
     AsyncStorage.getItem('onboarding_done').then(val => {
       if (val === 'true') {
-        router.replace('/sure-sec');
+        router.replace('/(tabs)');
       } else {
         router.replace('/onboarding');
       }

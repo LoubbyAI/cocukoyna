@@ -15,7 +15,6 @@ export default function RootLayout() {
           <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
             <Stack.Screen name="index" />
             <Stack.Screen name="onboarding" />
-            <Stack.Screen name="sure-sec" options={{ animation: 'slide_from_bottom' }} />
             <Stack.Screen name="yas-sec" options={{ animation: 'slide_from_bottom' }} />
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="aktivite/[id]" options={{ animation: 'slide_from_bottom' }} />

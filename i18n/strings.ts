@@ -11,18 +11,14 @@ const tr = {
   onb_baslayalim: 'Başlayalım →',
   onb_kac_yas: 'Çocuğunuz kaç yaşında?',
   onb_devam: 'Devam →',
-  onb_kac_sure: 'Bugün ne kadar süren var?',
   onb_hazirsin: 'Hazırsın! 🎉',
   onb_ozet_yas: (yas: string) => `${yas} için aktiviteler`,
-  onb_ozet_sure: (sure: string) => `${sure} süreli oyunlar`,
   onb_kesfet: 'Keşfetmeye Başla 🎯',
-
-  // Süre etiketleri
-  sure_label: {
-    '5':  { baslik: '5 dakika',   alt: 'Hızlı bir oyun' },
-    '15': { baslik: '15 dakika',  alt: 'Rahat bir aktivite' },
-    '30': { baslik: '30 dakika+', alt: 'Uzun soluklu eğlence' },
-  } as Record<string, { baslik: string; alt: string }>,
+  onb_faydalar: [
+    '🌱 Montessori & Waldorf ilhamlı aktiviteler',
+    '🧠 Yaşına özel bilişsel ve motor gelişim',
+    '❤️ Ebeveyn-çocuk bağını güçlendiren oyunlar',
+  ] as string[],
 
   // Yaş grup etiketleri
   yas_label: {
@@ -98,10 +94,6 @@ const tr = {
   det_hata: 'Aktivite bulunamadı',
   det_geri: '← Geri dön',
 
-  // Süre seç ekranı
-  sure_tabi_balon: 'Bugün ne kadar\nsüren var?',
-  sure_git: 'Aktivitelere Git 🎯',
-
   // Yaş seç ekranı
   yas_tabi_balon: 'Çocuğunun kaç yaşında?',
   yas_kaydet: 'Kaydet ✓',
@@ -167,17 +159,14 @@ const en: Strings = {
   onb_baslayalim: "Let's Begin →",
   onb_kac_yas: 'How old is your child?',
   onb_devam: 'Continue →',
-  onb_kac_sure: 'How much time do you have?',
   onb_hazirsin: "You're Ready! 🎉",
   onb_ozet_yas: (yas: string) => `activities for ${yas}`,
-  onb_ozet_sure: (sure: string) => `${sure} games`,
   onb_kesfet: 'Start Exploring 🎯',
-
-  sure_label: {
-    '5':  { baslik: '5 minutes',   alt: 'Quick play' },
-    '15': { baslik: '15 minutes',  alt: 'Relaxed activity' },
-    '30': { baslik: '30 minutes+', alt: 'Extended fun' },
-  },
+  onb_faydalar: [
+    '🌱 Inspired by Montessori & Waldorf',
+    '🧠 Age-specific cognitive & motor development',
+    '❤️ Activities that strengthen parent-child bond',
+  ],
 
   yas_label: {
     '0-1': { baslik: '0–1 years', alt: 'Baby' },
@@ -246,9 +235,6 @@ const en: Strings = {
   det_hata: 'Activity not found',
   det_geri: '← Go back',
 
-  sure_tabi_balon: 'How much time\ndo you have today?',
-  sure_git: 'Go to Activities 🎯',
-
   yas_tabi_balon: 'How old is your child?',
   yas_kaydet: 'Save ✓',
   yas_iptal: 'Cancel',
@@ -297,4 +283,139 @@ const en: Strings = {
   gizlilik_tamam: 'Got it',
 };
 
-export { tr, en };
+const ru: Strings = {
+  tab_aktiviteler: 'Занятия',
+  tab_favoriler: 'Избранное',
+  tab_ayarlar: 'Настройки',
+
+  onb_merhaba: 'Привет!',
+  onb_benim_adim: 'Меня зовут Таби.',
+  onb_slogan: 'Вместе мы откроем\nудивительные занятия',
+  onb_baslayalim: 'Начнём →',
+  onb_kac_yas: 'Сколько лет вашему ребёнку?',
+  onb_devam: 'Продолжить →',
+  onb_hazirsin: 'Вы готовы! 🎉',
+  onb_ozet_yas: (yas: string) => `занятия для ${yas}`,
+  onb_kesfet: 'Начать исследование 🎯',
+  onb_faydalar: [
+    '🌱 Вдохновлено Монтессори и Вальдорфом',
+    '🧠 Развитие по возрасту: познание и моторика',
+    '❤️ Занятия для укрепления связи с ребёнком',
+  ],
+
+  yas_label: {
+    '0-1': { baslik: '0–1 год',  alt: 'Малыш' },
+    '1-2': { baslik: '1–2 года', alt: 'Малыш' },
+    '2-3': { baslik: '2–3 года', alt: 'Любопытный' },
+    '3-5': { baslik: '3–5 лет',  alt: 'Творческий' },
+    '5-7': { baslik: '5–7 лет',  alt: 'Энергичный' },
+    '7-9': { baslik: '7–9 лет',  alt: 'Исследователь' },
+  },
+
+  kat_label: {
+    sanat:    'Искусство',
+    hareket:  'Движение',
+    zihinsel: 'Познание',
+    doga:     'Природа',
+    muzik:    'Музыка',
+    dil:      'Язык',
+    motor:    'Моторика',
+    sosyal:   'Общение',
+  },
+
+  zorluk_label: {
+    kolay: 'лёгкий',
+    orta:  'средний',
+    zor:   'сложный',
+  },
+
+  ped_label: {
+    sanat:    'Вдохновлено Вальдорфом',
+    hareket:  'Вдохновлено игровой терапией',
+    zihinsel: 'Вдохновлено Монтессори',
+    doga:     'Вдохновлено Монтессори',
+    muzik:    'Вдохновлено Вальдорфом',
+    dil:      'Ориентировано на развитие',
+    motor:    'Вдохновлено Монтессори',
+    sosyal:   'Вдохновлено игровой терапией',
+  },
+
+  ana_baslik: 'Во что играем сегодня? 🎯',
+  ana_aktivite: 'занятий',
+  ana_yas_chip: 'Возраст ›',
+  ana_tumu: '✦ Все',
+  ana_bos_baslik: 'Хмм, попробуй что-то другое...',
+  ana_bos_alt: 'Занятия для этого фильтра не найдены.',
+  ana_filtre_temizle: 'Сбросить фильтр',
+  kart_premium: 'PREMIUM',
+
+  fav_baslik: 'Мои избранные',
+  fav_balon_var: (n: number) => `${n} избранных занятия здесь! ❤️`,
+  fav_balon_yok: 'Нажми на сердечко, чтобы сохранить ❤️',
+  fav_bos_baslik: 'Хмм, избранного пока нет...',
+  fav_bos_alt: 'Нажми на сердечко в занятии, чтобы добавить сюда',
+  fav_git: 'Перейти к занятиям',
+
+  det_malzeme: '🛒 МАТЕРИАЛЫ',
+  det_nasil: '👣 КАК ИГРАТЬ',
+  det_ipucu: '💡 СОВЕТ РОДИТЕЛЮ',
+  det_odak_but: '🎯 Играть в режиме фокуса',
+  det_odak_alt: 'Только шаги — отложи телефон!',
+  det_tabi_ad: 'ТАБИ',
+  det_muhtesem: 'Потрясающе! 🎉',
+  det_tamamlandi: 'Вы завершили это занятие!',
+  det_harika: 'Отличная работа!',
+  det_yas: 'лет',
+  det_adim: 'шагов',
+  det_hata: 'Занятие не найдено',
+  det_geri: '← Назад',
+
+  yas_tabi_balon: 'Сколько лет вашему ребёнку?',
+  yas_kaydet: 'Сохранить ✓',
+  yas_iptal: 'Отмена',
+
+  ayt_baslik: 'Настройки',
+  ayt_tabi_balon: 'Всё можно настроить здесь ⚙️',
+  ayt_premium_baslik: 'Перейти на Premium',
+  ayt_premium_alt: 'Доступ ко всем 200+ занятиям',
+  ayt_ozellikler: [
+    '✅ Полная библиотека для всех возрастов',
+    '✅ Новые занятия обновляются автоматически',
+    '✅ Без рекламы, навсегда',
+    '✅ Контент на основе Монтессори и Вальдорф',
+  ],
+  ayt_en_populer: '⭐ САМЫЙ ПОПУЛЯРНЫЙ',
+  ayt_yillik: 'Годовой — $9.99/год',
+  ayt_yillik_alt: '$0.83/мес · Отмена в любое время',
+  ayt_yukleniyor: 'Загрузка...',
+  ayt_omur: 'Навсегда — $19.99',
+  ayt_omur_alt: 'Единовременно, навсегда',
+  ayt_geri_yukle: 'Восстановить покупки',
+  ayt_kosullar: 'Условия использования',
+  ayt_gizlilik_link: 'Политика конфиденциальности',
+  ayt_premium_aktif_baslik: 'Premium активен!',
+  ayt_premium_aktif_alt: 'У вас есть доступ ко всем занятиям',
+  ayt_hakkinda: 'О ПРИЛОЖЕНИИ',
+  ayt_surum_baslik: 'Версия',
+  ayt_gizlilik_baslik: 'Политика конфиденциальности',
+  ayt_gizlilik_alt: 'Мы не собираем данные',
+  ayt_arkadasaoner: 'Порекомендовать другу',
+  ayt_arkadasaoner_alt: 'Поделись и порадуй близких',
+  ayt_cevrimdisi: 'Работает офлайн',
+  ayt_cevrimdisi_alt: 'Интернет не нужен',
+  ayt_sifirla_baslik: 'Сбросить онбординг',
+  ayt_sifirla_alt: 'Для тестирования — вернуться к первому запуску',
+  ayt_felsefe: 'ФИЛОСОФИЯ',
+  ayt_felsefe_1: 'Это приложение создано для моментов без экрана — творческих и живых. Иронично, но правда: во время игры можно отложить телефон.',
+  ayt_felsefe_2: 'Занятия, вдохновлённые Монтессори, Вальдорфом и игровой терапией, подобраны с учётом развития вашего ребёнка.',
+
+  paylasim_aktivite: (baslik: string) => `Я сделал(а) занятие "${baslik}" с ребёнком! 🎉\n\nПопробуйте 👉 200+ занятий в приложении Tabi.\n\nhttps://cocukoyna.app`,
+  paylasim_arkadasaoner: 'Tabi — Играем с детьми — 200+ педагогических занятий!\n\nhttps://cocukoyna.app',
+  paylasim_baslik: 'Tabi — Играем с детьми',
+
+  gizlilik_baslik: 'Политика конфиденциальности',
+  gizlilik_mesaj: 'Приложение не собирает никаких персональных данных. Все данные хранятся только на вашем устройстве. Ничего не отправляется на сервер.',
+  gizlilik_tamam: 'Понятно',
+};
+
+export { tr, en, ru };

@@ -22,12 +22,6 @@ import { GrainOverlay } from '../../components/GrainOverlay';
 import * as Haptics from 'expo-haptics';
 import { useStrings, useLang } from '../../i18n';
 
-const SURE_ETIKET: Record<string, { emoji: string; label: string }> = {
-  '5':  { emoji: '⚡', label: '5 dk' },
-  '15': { emoji: '☀️', label: '15 dk' },
-  '30': { emoji: '🌟', label: '30 dk+' },
-};
-
 const ZORLUK_RENK: Record<string, string> = {
   kolay: '#5DBB7B',
   orta: '#FFB946',
@@ -39,7 +33,7 @@ const ZORLUK_DOLU: Record<string, number> = { kolay: 1, orta: 2, zor: 3 };
 export default function AktiviteListesi() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { secilenYas, secilenSure, favoriToggle, favorileMi } = useAktivite();
+  const { secilenYas, favoriToggle, favorileMi } = useAktivite();
   const { isPremium } = usePremium();
   const [secilenKategori, setSecilenKategori] = useState<Kategori | null>(null);
   const S = useStrings();
@@ -48,8 +42,6 @@ export default function AktiviteListesi() {
   const filtrelenmis = AKTIVITELER.filter(a => {
     if (secilenYas && !a.yasGrubu.includes(secilenYas)) return false;
     if (secilenKategori && a.kategori !== secilenKategori) return false;
-    if (secilenSure === '5' && a.sure > 5) return false;
-    if (secilenSure === '15' && a.sure > 15) return false;
     return true;
   }).sort((a, b) => {
     if (!isPremium) {
@@ -60,7 +52,6 @@ export default function AktiviteListesi() {
   });
 
   const yasInfo = YAS_GRUPLARI.find(y => y.id === secilenYas);
-  const sureEtiket = secilenSure ? SURE_ETIKET[secilenSure] : null;
 
   function aktiviteAc(a: Aktivite) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -172,11 +163,6 @@ export default function AktiviteListesi() {
                 <Text style={styles.headerBilgiYazi}>{filtrelenmis.length} {S.ana_aktivite}</Text>
               </View>
               <View style={styles.headerChipler}>
-                {sureEtiket && (
-                  <TouchableOpacity style={styles.chip} onPress={() => router.push('/sure-sec')}>
-                    <Text style={styles.chipYazi}>{sureEtiket.emoji} {sureEtiket.label} ›</Text>
-                  </TouchableOpacity>
-                )}
                 <TouchableOpacity style={styles.chip} onPress={() => router.push('/yas-sec')}>
                   <Text style={styles.chipYazi}>{S.ana_yas_chip}</Text>
                 </TouchableOpacity>
