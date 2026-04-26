@@ -42,11 +42,7 @@ export default function AyarlarEkrani() {
   }
 
   function gizlilikGoster() {
-    Alert.alert(
-      S.gizlilik_baslik,
-      S.gizlilik_mesaj,
-      [{ text: S.gizlilik_tamam }]
-    );
+    Linking.openURL('https://loubbyai.github.io/cocukoyna/');
   }
 
   return (
