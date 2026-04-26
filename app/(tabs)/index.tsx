@@ -51,6 +51,12 @@ export default function AktiviteListesi() {
     if (secilenSure === '5' && a.sure > 5) return false;
     if (secilenSure === '15' && a.sure > 15) return false;
     return true;
+  }).sort((a, b) => {
+    if (!isPremium) {
+      if (!a.premium && b.premium) return -1;
+      if (a.premium && !b.premium) return 1;
+    }
+    return 0;
   });
 
   const yasInfo = YAS_GRUPLARI.find(y => y.id === secilenYas);
