@@ -1,5 +1,4 @@
 import { useRouter } from 'expo-router';
-import { isEn } from '../../i18n';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   FlatList,
@@ -18,7 +17,7 @@ import { AKTIVITELER, type Aktivite } from '../../data/aktiviteler';
 import { KART_RENK, KART_RENK_ACIK, R } from '../../constants/renkler';
 import { GrainOverlay } from '../../components/GrainOverlay';
 import * as Haptics from 'expo-haptics';
-import { useStrings } from '../../i18n';
+import { useStrings, useLang } from '../../i18n';
 
 export default function FavorilerEkrani() {
   const router = useRouter();
@@ -26,6 +25,7 @@ export default function FavorilerEkrani() {
   const { favoriler, favoriToggle } = useAktivite();
   const { isPremium } = usePremium();
   const S = useStrings();
+  const { isRu, isEn } = useLang();
 
   const favoriAktiviteler = AKTIVITELER.filter(a => favoriler.includes(a.id));
 
@@ -52,7 +52,7 @@ export default function FavorilerEkrani() {
           <Text style={styles.emoji}>{item.emoji}</Text>
         </View>
         <View style={styles.kartIcerik}>
-          <Text style={styles.kartBaslik}>{(isEn && item.baslikEn) ? item.baslikEn : item.baslik}</Text>
+          <Text style={styles.kartBaslik}>{(isRu && item.baslikRu) ? item.baslikRu : (isEn && item.baslikEn) ? item.baslikEn : item.baslik}</Text>
           <View style={styles.rozetSatir}>
             <View style={[styles.rozet, { backgroundColor: renkAcik }]}>
               <Text style={[styles.rozetYazi, { color: renkAna }]}>⏱ {item.sure} dk</Text>

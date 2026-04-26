@@ -3,10 +3,12 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AktiviteProvider } from '../context/AktiviteContext';
 import { PremiumProvider } from '../context/PremiumContext';
+import { LangProvider } from '../i18n';
 
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
+      <LangProvider>
       <AktiviteProvider>
         <PremiumProvider>
           <StatusBar style="light" />
@@ -20,6 +22,7 @@ export default function RootLayout() {
           </Stack>
         </PremiumProvider>
       </AktiviteProvider>
+      </LangProvider>
     </SafeAreaProvider>
   );
 }

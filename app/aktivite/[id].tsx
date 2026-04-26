@@ -29,7 +29,7 @@ import { useAktivite } from '../../context/AktiviteContext';
 import { AKTIVITELER } from '../../data/aktiviteler';
 import { KART_GRADIENT, KART_RENK, KART_RENK_ACIK, R } from '../../constants/renkler';
 import { GrainOverlay } from '../../components/GrainOverlay';
-import { useStrings, isEn } from '../../i18n';
+import { useStrings, useLang } from '../../i18n';
 
 export default function AktiviteDetay() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -40,6 +40,7 @@ export default function AktiviteDetay() {
   const [tamamlananMalzemeler, setTamamlananMalzemeler] = useState<number[]>([]);
   const [focusMod, setFocusMod] = useState(false);
   const S = useStrings();
+  const { isRu, isEn } = useLang();
 
   const aktivite = AKTIVITELER.find(a => a.id === id);
 
@@ -57,10 +58,10 @@ export default function AktiviteDetay() {
   const gradient = KART_GRADIENT[aktivite.renk];
   const renkAna = KART_RENK[aktivite.renk];
   const renkAcik = KART_RENK_ACIK[aktivite.renk];
-  const gosterBaslik = (isEn && aktivite.baslikEn) ? aktivite.baslikEn : aktivite.baslik;
-  const gosterMalzemeler = (isEn && aktivite.malzemelerEn) ? aktivite.malzemelerEn : aktivite.malzemeler;
-  const gosterAdimlar = (isEn && aktivite.adimlarEn) ? aktivite.adimlarEn : aktivite.adimlar;
-  const gosterIpucu = (isEn && aktivite.ipucuEn) ? aktivite.ipucuEn : aktivite.ipucu;
+  const gosterBaslik = (isRu && aktivite.baslikRu) ? aktivite.baslikRu : (isEn && aktivite.baslikEn) ? aktivite.baslikEn : aktivite.baslik;
+  const gosterMalzemeler = (isRu && aktivite.malzemelerRu) ? aktivite.malzemelerRu : (isEn && aktivite.malzemelerEn) ? aktivite.malzemelerEn : aktivite.malzemeler;
+  const gosterAdimlar = (isRu && aktivite.adimlarRu) ? aktivite.adimlarRu : (isEn && aktivite.adimlarEn) ? aktivite.adimlarEn : aktivite.adimlar;
+  const gosterIpucu = (isRu && aktivite.ipucuRu) ? aktivite.ipucuRu : (isEn && aktivite.ipucuEn) ? aktivite.ipucuEn : aktivite.ipucu;
   const tamTamamlanan = tamamlananAdimlar.length === gosterAdimlar.length;
   const pedagoji = PEDAGOJI_MAP[aktivite.kategori];
 

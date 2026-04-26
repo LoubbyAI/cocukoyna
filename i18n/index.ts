@@ -1,19 +1,13 @@
-import { tr, en, type Strings } from './strings';
+export { useLang, LangProvider } from './LangContext';
+export type { Lang } from './LangContext';
+export type { Strings } from './strings';
 
-function getDeviceLocale(): string {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().locale.split('-')[0];
-  } catch {
-    return 'en';
-  }
-}
-
-const deviceLocale = getDeviceLocale();
+import { useLang } from './LangContext';
+import type { Strings } from './strings';
 
 export function useStrings(): Strings {
-  return deviceLocale === 'tr' ? tr : en;
+  return useLang().strings;
 }
 
-export const isEn = deviceLocale !== 'tr';
-
-export type { Strings };
+// Geriye dönük uyumluluk — screens'lerde useLang() ile alın
+export { useLang as useIsRuEn };

@@ -18,13 +18,14 @@ import { Linking } from 'react-native';
 import { usePremium } from '../../context/PremiumContext';
 import { R } from '../../constants/renkler';
 import { GrainOverlay } from '../../components/GrainOverlay';
-import { useStrings } from '../../i18n';
+import { useStrings, useLang } from '../../i18n';
 
 export default function AyarlarEkrani() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { isPremium, yukleniyor, satinAl, geriYukle } = usePremium();
   const S = useStrings();
+  const { lang, setLang } = useLang();
 
   async function onboardingSifirla() {
     await AsyncStorage.removeItem('onboarding_done');
@@ -147,6 +148,25 @@ export default function AyarlarEkrani() {
             <Text style={styles.premiumAktifAlt}>{S.ayt_premium_aktif_alt}</Text>
           </LinearGradient>
         )}
+
+        {/* Dil Seçici */}
+        <Text style={styles.bolumBaslik}>DİL / LANGUAGE / ЯЗЫК</Text>
+        <View style={styles.dilKart}>
+          {([
+            { code: 'tr', flag: '🇹🇷', label: 'Türkçe' },
+            { code: 'en', flag: '🇬🇧', label: 'English' },
+            { code: 'ru', flag: '🇷🇺', label: 'Русский' },
+          ] as const).map(({ code, flag, label }) => (
+            <TouchableOpacity
+              key={code}
+              style={[styles.dilChip, lang === code && styles.dilChipAktif]}
+              onPress={() => setLang(code)}
+            >
+              <Text style={styles.dilFlag}>{flag}</Text>
+              <Text style={[styles.dilLabel, lang === code && styles.dilLabelAktif]}>{label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
         {/* Bilgi bölümü */}
         <Text style={styles.bolumBaslik}>{S.ayt_hakkinda}</Text>
@@ -485,6 +505,43 @@ const styles = StyleSheet.create({
     color: R.metin,
     lineHeight: 22,
     fontStyle: 'italic',
+  },
+  dilKart: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 4,
+  },
+  dilChip: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    backgroundColor: R.beyaz,
+    borderRadius: 16,
+    paddingVertical: 12,
+    borderWidth: 1.5,
+    borderColor: 'rgba(0,0,0,0.08)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  dilChipAktif: {
+    backgroundColor: R.turuncu,
+    borderColor: R.turuncu,
+  },
+  dilFlag: {
+    fontSize: 18,
+  },
+  dilLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: R.metin,
+  },
+  dilLabelAktif: {
+    color: R.beyaz,
   },
   debugBut: {
     backgroundColor: '#333',

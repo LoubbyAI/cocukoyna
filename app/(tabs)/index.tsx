@@ -20,7 +20,7 @@ import { AKTIVITELER, KATEGORILER, YAS_GRUPLARI, type Aktivite, type Kategori } 
 import { KAT_GRADIENT, KART_GRADIENT, KART_RENK, KART_RENK_ACIK, R } from '../../constants/renkler';
 import { GrainOverlay } from '../../components/GrainOverlay';
 import * as Haptics from 'expo-haptics';
-import { useStrings, isEn } from '../../i18n';
+import { useStrings, useLang } from '../../i18n';
 
 const SURE_ETIKET: Record<string, { emoji: string; label: string }> = {
   '5':  { emoji: '⚡', label: '5 dk' },
@@ -43,6 +43,7 @@ export default function AktiviteListesi() {
   const { isPremium } = usePremium();
   const [secilenKategori, setSecilenKategori] = useState<Kategori | null>(null);
   const S = useStrings();
+  const { isRu, isEn } = useLang();
 
   const filtrelenmis = AKTIVITELER.filter(a => {
     if (secilenYas && !a.yasGrubu.includes(secilenYas)) return false;
@@ -113,7 +114,7 @@ export default function AktiviteListesi() {
 
         {/* Alt içerik */}
         <View style={styles.kartAlt}>
-          <Text style={styles.kartBaslik} numberOfLines={2}>{(isEn && item.baslikEn) ? item.baslikEn : item.baslik}</Text>
+          <Text style={styles.kartBaslik} numberOfLines={2}>{(isRu && item.baslikRu) ? item.baslikRu : (isEn && item.baslikEn) ? item.baslikEn : item.baslik}</Text>
           <View style={styles.kartFooter}>
             <View style={styles.zorlukRow}>
               {[0, 1, 2].map(i => (
