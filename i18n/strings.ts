@@ -4,7 +4,7 @@ const tr = {
   tab_favoriler: 'Favoriler',
   tab_ayarlar: 'Ayarlar',
 
-  // Onboarding
+  // Onboarding (eski — yas-sec.tsx için korundu)
   onb_merhaba: 'Merhaba!',
   onb_benim_adim: 'Benim adım Tabi.',
   onb_slogan: 'Sizinle harika oyunlar\nkeşfedeceğiz',
@@ -19,6 +19,25 @@ const tr = {
     '🧠 Yaşına özel bilişsel ve motor gelişim',
     '❤️ Ebeveyn-çocuk bağını güçlendiren oyunlar',
   ] as string[],
+
+  // Onboarding v2 — 4 ekran
+  onb_s1_headline: 'Daha az ekran.\nDaha fazla oyun.',
+  onb_s1_sub: 'Gerçekten önemli olan aktiviteler',
+  onb_s1_btn: 'Keşfetmeye başla →',
+  onb_s2_headline: 'Hep yeni şeyler\nkeşfetmeye hazır',
+  onb_s2_sub: 'Her gün anlamlı oyun',
+  onb_s2_meta: '221+ aktivite · 5–30 dk · Montessori & Waldorf',
+  onb_s2_microcopy: 'Hazırlık gerekmez. Sadece oyna.',
+  onb_s2_btn: 'Devam →',
+  onb_s3_headline: 'Çocuğunu\ntanıyalım',
+  onb_s3_sub: 'Her şeyi senin için ayarlayacağız',
+  onb_s3_microcopy: 'Saniyeler içinde hazır',
+  onb_s3_btn: 'Yaş seç →',
+  onb_s4_headline: 'Hazırsın',
+  onb_s4_age_text: (yas: string, label: string) => `${yas} (${label}) için aktiviteler hazır.`,
+  onb_s4_sub: 'Bugün anlamlı bir şeye başlayalım',
+  onb_s4_microcopy: 'İstediğin zaman değiştirebilirsin',
+  onb_s4_btn: 'Hadi başlayalım →',
 
   // Yaş grup etiketleri
   yas_label: {
@@ -168,6 +187,25 @@ const en: Strings = {
     '❤️ Activities that strengthen parent-child bond',
   ],
 
+  // Onboarding v2
+  onb_s1_headline: 'Less screen.\nMore real play.',
+  onb_s1_sub: 'Simple activities that truly matter',
+  onb_s1_btn: 'Start exploring →',
+  onb_s2_headline: 'Always something new\nto explore',
+  onb_s2_sub: 'Meaningful play, every single day',
+  onb_s2_meta: '221+ activities · 5–30 min · Montessori & Waldorf',
+  onb_s2_microcopy: 'No prep. Just play.',
+  onb_s2_btn: 'Continue →',
+  onb_s3_headline: 'Tell us about\nyour child',
+  onb_s3_sub: 'We\'ll tailor everything for you',
+  onb_s3_microcopy: 'Set up in seconds',
+  onb_s3_btn: 'Choose age →',
+  onb_s4_headline: 'You\'re ready',
+  onb_s4_age_text: (yas: string, label: string) => `Activities for ${yas} (${label}) are ready.`,
+  onb_s4_sub: 'Let\'s start something meaningful today',
+  onb_s4_microcopy: 'You can change this anytime',
+  onb_s4_btn: 'Let\'s begin →',
+
   yas_label: {
     '0-1': { baslik: '0–1 years', alt: 'Baby' },
     '1-2': { baslik: '1–2 years', alt: 'Toddler' },
@@ -302,6 +340,25 @@ const ru: Strings = {
     '🧠 Развитие по возрасту: познание и моторика',
     '❤️ Занятия для укрепления связи с ребёнком',
   ],
+
+  // Onboarding v2
+  onb_s1_headline: 'Меньше экрана.\nБольше игры.',
+  onb_s1_sub: 'Занятия, которые действительно важны',
+  onb_s1_btn: 'Начать →',
+  onb_s2_headline: 'Всегда что-то новое\nдля игры',
+  onb_s2_sub: 'Осмысленная игра каждый день',
+  onb_s2_meta: '221+ занятий · 5–30 мин · Монтессори & Вальдорф',
+  onb_s2_microcopy: 'Без подготовки. Просто играй.',
+  onb_s2_btn: 'Продолжить →',
+  onb_s3_headline: 'Расскажи\nо ребёнке',
+  onb_s3_sub: 'Подберём всё именно для вас',
+  onb_s3_microcopy: 'Настройка за секунды',
+  onb_s3_btn: 'Выбрать возраст →',
+  onb_s4_headline: 'Всё готово',
+  onb_s4_age_text: (yas: string, label: string) => `Занятия для ${yas} (${label}) готовы.`,
+  onb_s4_sub: 'Начнём что-то особенное сегодня',
+  onb_s4_microcopy: 'Это можно изменить в любое время',
+  onb_s4_btn: 'Начинаем →',
 
   yas_label: {
     '0-1': { baslik: '0–1 год',  alt: 'Малыш' },
