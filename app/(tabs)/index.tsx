@@ -97,7 +97,7 @@ export default function AktiviteListesi() {
 
           {/* Süre pill */}
           <View style={styles.surePill}>
-            <Text style={styles.surePillYazi}>⏱ {item.sure} dk</Text>
+            <Text style={styles.surePillYazi}>⏱ {item.sure} {S.det_dk}</Text>
           </View>
 
           {/* Premium kilit overlay */}

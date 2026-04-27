@@ -156,7 +156,6 @@ export default function AyarlarEkrani() {
         )}
 
         {/* Dil Seçici */}
-        <Text style={styles.bolumBaslik}>DİL / LANGUAGE / ЯЗЫК</Text>
         <View style={styles.karteGrup}>
           <TouchableOpacity style={styles.satir} onPress={() => setDilModalAcik(true)} activeOpacity={0.7}>
             <Text style={styles.satirIkon}>🌐</Text>

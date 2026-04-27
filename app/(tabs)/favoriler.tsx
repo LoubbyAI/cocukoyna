@@ -55,7 +55,7 @@ export default function FavorilerEkrani() {
           <Text style={styles.kartBaslik}>{(isRu && item.baslikRu) ? item.baslikRu : (isEn && item.baslikEn) ? item.baslikEn : item.baslik}</Text>
           <View style={styles.rozetSatir}>
             <View style={[styles.rozet, { backgroundColor: renkAcik }]}>
-              <Text style={[styles.rozetYazi, { color: renkAna }]}>⏱ {item.sure} dk</Text>
+              <Text style={[styles.rozetYazi, { color: renkAna }]}>⏱ {item.sure} {S.det_dk}</Text>
             </View>
             <View style={[styles.rozet, { backgroundColor: renkAcik }]}>
               <Text style={[styles.rozetYazi, { color: renkAna }]}>
