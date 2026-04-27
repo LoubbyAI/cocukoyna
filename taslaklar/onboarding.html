@@ -287,19 +287,25 @@
     /* ══════════════════════════
        SCREEN 2 — STATS
     ══════════════════════════ */
-    #s2 { padding-top: 52px; }
-    #s2 .s2-headline, #s2 .s2-mascot-area, #s2 .s2-sub,
-    #s2 .s2-stats, #s2 .microcopy, #s2 .dots, #s2 .btn { position: relative; z-index: 6; }
+    #s2 { padding: 0; }
+    .s2-bottom {
+      position: absolute;
+      bottom: 36px;
+      left: 26px;
+      right: 26px;
+      z-index: 6;
+    }
     #s3 .s3-top, #s3 .age-grid, #s3 .microcopy, #s3 .dots, #s3 .btn { position: relative; z-index: 6; }
     #s4 .s4-mascot-area, #s4 .s4-bottom, #s4 .dots, #s4 .btn { position: relative; z-index: 6; }
 
     .s2-headline {
       font-family: 'Fraunces', serif;
-      font-size: 30px;
+      font-size: 27px;
       font-weight: 500;
       text-align: center;
       line-height: 1.1;
       letter-spacing: -0.5px;
+      margin-bottom: 6px;
       background: linear-gradient(180deg, #FFF8F0 0%, #FFD8A8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -311,7 +317,7 @@
       color: rgba(255,224,194,0.70);
       text-align: center;
       margin-top: 0;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
       line-height: 1.5;
     }
 
@@ -341,7 +347,7 @@
 
     .s2-stats {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     .stat-line {
       font-size: 12px;
@@ -601,25 +607,22 @@
     <div class="screen" id="s2">
       <div class="scrim-top"></div>
       <div class="scrim"></div>
-      <div class="s2-headline">Always something new<br>to explore</div>
 
-      <div class="s2-mascot-area"></div>
-
-      <div class="s2-sub">Meaningful play, every single day</div>
-
-      <div class="s2-stats">
-        <div class="stat-line"><strong>221+</strong> activities &nbsp;·&nbsp; <strong>5–30</strong> min &nbsp;·&nbsp; Montessori & Waldorf</div>
+      <div class="s2-bottom">
+        <div class="s2-headline">Always something new<br>to explore</div>
+        <div class="s2-sub">Meaningful play, every single day</div>
+        <div class="s2-stats">
+          <div class="stat-line"><strong>221+</strong> activities &nbsp;·&nbsp; <strong>5–30</strong> min &nbsp;·&nbsp; Montessori & Waldorf</div>
+        </div>
+        <div class="microcopy" style="text-align:center; margin-bottom: 10px;">No prep. Just play.</div>
+        <div class="dots" style="padding-bottom: 12px;">
+          <div class="dot"></div>
+          <div class="dot on"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <button class="btn btn-white" onclick="goTo(3)">Continue →</button>
       </div>
-      <div class="microcopy" style="text-align:center; margin-bottom: 16px;">No prep. Just play.</div>
-
-      <div class="dots">
-        <div class="dot"></div>
-        <div class="dot on"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-
-      <button class="btn btn-white" onclick="goTo(3)">Continue →</button>
     </div>
 
     <!-- ══ SCREEN 3 — AGE SELECT ══ -->

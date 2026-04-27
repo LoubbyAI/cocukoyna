@@ -113,14 +113,14 @@ export default function AktiviteDetay() {
       <View style={styles.infoBar}>
         <View style={styles.infoItem}>
           <Text style={styles.infoEmoji}>⏱</Text>
-          <Text style={styles.infoYazi}>{aktivite.sure} dk</Text>
+          <Text style={styles.infoYazi}>{aktivite.sure} {S.det_dk}</Text>
         </View>
         <View style={styles.infoAyrac} />
         <View style={styles.infoItem}>
           <Text style={styles.infoEmoji}>
             {aktivite.zorluk === 'kolay' ? '🟢' : aktivite.zorluk === 'orta' ? '🟡' : '🔴'}
           </Text>
-          <Text style={styles.infoYazi}>{aktivite.zorluk}</Text>
+          <Text style={styles.infoYazi}>{S.zorluk_label[aktivite.zorluk]}</Text>
         </View>
         <View style={styles.infoAyrac} />
         <View style={styles.infoItem}>
@@ -230,7 +230,7 @@ export default function AktiviteDetay() {
               </TouchableOpacity>
             </View>
             <Text style={styles.focusBaslik}>{gosterBaslik}</Text>
-            <Text style={styles.focusSure}>⏱ {aktivite.sure} dk • {gosterAdimlar.length} {S.det_adim}</Text>
+            <Text style={styles.focusSure}>⏱ {aktivite.sure} {S.det_dk} • {gosterAdimlar.length} {S.det_adim}</Text>
           </LinearGradient>
 
           {/* Adımlar büyük */}

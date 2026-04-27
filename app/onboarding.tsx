@@ -97,9 +97,6 @@ export default function OnboardingEkrani() {
         {/* ── EKRAN 1 — WELCOME ── */}
         {ekran === 1 && (
           <View style={[StyleSheet.absoluteFill, { paddingTop: insets.top }]}>
-            {/* Logo */}
-            <Text style={styles.logo}>tabi</Text>
-
             {/* Bottom scrim */}
             <LinearGradient
               colors={['transparent', 'rgba(100,30,5,0.30)']}
@@ -144,17 +141,14 @@ export default function OnboardingEkrani() {
               style={styles.bottomScrim}
             />
 
-            <View style={styles.s2Inner}>
+            {/* Alt blok — S1 gibi bottom-anchored, tüm içerik altta */}
+            <View style={[styles.s2BottomBlock, { bottom: 48 + insets.bottom }]}>
               <Text style={styles.s2Headline}>{S.onb_s2_headline}</Text>
-
-              {/* Flexible space — arka planda Tabi var */}
-              <View style={styles.flex1} />
-
               <Text style={styles.s2Sub}>{S.onb_s2_sub}</Text>
               <Text style={styles.s2Meta}>{S.onb_s2_meta}</Text>
-              <Text style={styles.microcopy}>{S.onb_s2_microcopy}</Text>
+              <Text style={[styles.microcopy, { marginBottom: 10 }]}>{S.onb_s2_microcopy}</Text>
 
-              <View style={styles.dotsRowInner}>
+              <View style={[styles.dotsRowInner, { marginBottom: 12 }]}>
                 {[1,2,3,4].map(n => (
                   <View key={n} style={[styles.dot, ekran === n && styles.dotOn]} />
                 ))}
@@ -290,22 +284,6 @@ const styles = StyleSheet.create({
   },
   flex1: { flex: 1 },
 
-  // Logo
-  logo: {
-    position: 'absolute',
-    top: 80,
-    left: 24,
-    fontSize: 20,
-    fontFamily: HEADLINE_FONT,
-    fontWeight: '400',
-    color: 'rgba(255,255,255,0.92)',
-    letterSpacing: 0.8,
-    zIndex: 10,
-    textShadowColor: 'rgba(255,210,140,0.55)',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 18,
-  },
-
   // Scrims
   bottomScrim: {
     position: 'absolute',
@@ -396,28 +374,28 @@ const styles = StyleSheet.create({
   },
 
   // ── Screen 2 ──
-  s2Inner: {
-    flex: 1,
-    paddingHorizontal: 26,
-    paddingTop: 56,
+  s2BottomBlock: {
+    position: 'absolute',
+    left: 26,
+    right: 26,
     zIndex: 5,
   },
   s2Headline: {
     fontFamily: HEADLINE_FONT,
-    fontSize: 30,
+    fontSize: 27,
     fontWeight: '500',
     color: '#FFF8F0',
-    lineHeight: 34,
+    lineHeight: 31,
     letterSpacing: -0.5,
     textAlign: 'center',
-    marginBottom: 0,
+    marginBottom: 6,
   },
   s2Sub: {
     fontSize: 15,
     fontWeight: '400',
     color: 'rgba(255,224,194,0.70)',
     textAlign: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
     lineHeight: 22,
   },
   s2Meta: {
@@ -426,7 +404,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255,240,220,0.52)',
     textAlign: 'center',
     letterSpacing: 0.8,
-    marginBottom: 6,
+    marginBottom: 10,
   },
 
   // ── Screen 3 ──

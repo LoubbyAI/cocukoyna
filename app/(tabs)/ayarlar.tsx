@@ -1,8 +1,10 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Alert,
   Image,
+  Modal,
   ScrollView,
   Share,
   StyleSheet,
@@ -26,6 +28,14 @@ export default function AyarlarEkrani() {
   const { isPremium, yukleniyor, satinAl, geriYukle } = usePremium();
   const S = useStrings();
   const { lang, setLang } = useLang();
+  const [dilModalAcik, setDilModalAcik] = useState(false);
+
+  const DILLER = [
+    { code: 'tr' as const, flag: '🇹🇷', label: 'Türkçe' },
+    { code: 'en' as const, flag: '🇬🇧', label: 'English' },
+    { code: 'ru' as const, flag: '🇷🇺', label: 'Русский' },
+  ];
+  const mevcutDil = DILLER.find(d => d.code === lang);
 
   async function onboardingSifirla() {
     await AsyncStorage.removeItem('onboarding_done');
@@ -147,22 +157,38 @@ export default function AyarlarEkrani() {
 
         {/* Dil Seçici */}
         <Text style={styles.bolumBaslik}>DİL / LANGUAGE / ЯЗЫК</Text>
-        <View style={styles.dilKart}>
-          {([
-            { code: 'tr', flag: '🇹🇷', label: 'Türkçe' },
-            { code: 'en', flag: '🇬🇧', label: 'English' },
-            { code: 'ru', flag: '🇷🇺', label: 'Русский' },
-          ] as const).map(({ code, flag, label }) => (
-            <TouchableOpacity
-              key={code}
-              style={[styles.dilChip, lang === code && styles.dilChipAktif]}
-              onPress={() => setLang(code)}
-            >
-              <Text style={styles.dilFlag}>{flag}</Text>
-              <Text style={[styles.dilLabel, lang === code && styles.dilLabelAktif]}>{label}</Text>
-            </TouchableOpacity>
-          ))}
+        <View style={styles.karteGrup}>
+          <TouchableOpacity style={styles.satir} onPress={() => setDilModalAcik(true)} activeOpacity={0.7}>
+            <Text style={styles.satirIkon}>🌐</Text>
+            <View style={styles.satirMetin}>
+              <Text style={styles.satirBaslik}>App Language</Text>
+              <Text style={styles.satirAlt}>{mevcutDil?.flag} {mevcutDil?.label}</Text>
+            </View>
+            <Text style={styles.ok}>›</Text>
+          </TouchableOpacity>
         </View>
+
+        {/* Dil Modal */}
+        <Modal visible={dilModalAcik} transparent animationType="slide" statusBarTranslucent>
+          <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setDilModalAcik(false)}>
+            <View style={[styles.modalSheet, { paddingBottom: insets.bottom + 16 }]}>
+              <View style={styles.tutamac} />
+              <Text style={styles.modalBaslik}>DİL / LANGUAGE / ЯЗЫК</Text>
+              {DILLER.map(({ code, flag, label }) => (
+                <TouchableOpacity
+                  key={code}
+                  style={styles.dilSatir}
+                  onPress={() => { setLang(code); setDilModalAcik(false); }}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.dilSatirFlag}>{flag}</Text>
+                  <Text style={styles.dilSatirLabel}>{label}</Text>
+                  {lang === code && <Text style={styles.dilTik}>✓</Text>}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </Modal>
 
         {/* Bilgi bölümü */}
         <Text style={styles.bolumBaslik}>{S.ayt_hakkinda}</Text>
@@ -502,42 +528,57 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     fontStyle: 'italic',
   },
-  dilKart: {
-    flexDirection: 'row',
-    gap: 8,
-    marginBottom: 4,
-  },
-  dilChip: {
+  modalOverlay: {
     flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+    justifyContent: 'flex-end',
+  },
+  modalSheet: {
+    backgroundColor: R.antik,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    paddingTop: 12,
+    paddingHorizontal: 16,
+  },
+  tutamac: {
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: 'rgba(0,0,0,0.15)',
+    alignSelf: 'center',
+    marginBottom: 18,
+  },
+  modalBaslik: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: R.metinSoft,
+    letterSpacing: 0.8,
+    marginBottom: 12,
+    marginLeft: 4,
+  },
+  dilSatir: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 6,
     backgroundColor: R.beyaz,
     borderRadius: 16,
-    paddingVertical: 12,
-    borderWidth: 1.5,
-    borderColor: 'rgba(0,0,0,0.08)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 6,
-    elevation: 2,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    marginBottom: 8,
+    gap: 12,
   },
-  dilChipAktif: {
-    backgroundColor: R.turuncu,
-    borderColor: R.turuncu,
+  dilSatirFlag: {
+    fontSize: 22,
   },
-  dilFlag: {
-    fontSize: 18,
-  },
-  dilLabel: {
-    fontSize: 12,
+  dilSatirLabel: {
+    flex: 1,
+    fontSize: 15,
     fontWeight: '700',
     color: R.metin,
   },
-  dilLabelAktif: {
-    color: R.beyaz,
+  dilTik: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: R.turuncu,
   },
   debugBut: {
     backgroundColor: '#333',
