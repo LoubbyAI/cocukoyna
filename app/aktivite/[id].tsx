@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 import {
   Image,
   Modal,
@@ -35,7 +36,7 @@ export default function AktiviteDetay() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { favoriToggle, favorileMi } = useAktivite();
+  const { favoriToggle, favorileMi, oynananToggle, oynananMi } = useAktivite();
   const [tamamlananAdimlar, setTamamlananAdimlar] = useState<number[]>([]);
   const [tamamlananMalzemeler, setTamamlananMalzemeler] = useState<number[]>([]);
   const [focusMod, setFocusMod] = useState(false);
@@ -216,6 +217,22 @@ export default function AktiviteDetay() {
             </View>
           </View>
         )}
+
+        {/* Oynadık butonu */}
+        <TouchableOpacity
+          style={[styles.oynadiBut, oynananMi(aktivite.id) && styles.oynadiButAktif]}
+          onPress={() => {
+            oynananToggle(aktivite.id);
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }}
+          activeOpacity={0.8}
+        >
+          <Text style={[styles.oynadiButYazi, oynananMi(aktivite.id) && styles.oynadiButYaziAktif]}>
+            {oynananMi(aktivite.id)
+              ? `✓ ${S.det_oynandi_but}  ·  ${S.det_oynandi_geri}`
+              : `✓  ${S.det_oynandi_but}`}
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
 
       {/* ── Focus Mode Modal ── */}
@@ -560,6 +577,30 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: R.metin,
     lineHeight: 22,
+  },
+
+  // ── Oynadık butonu ──
+  oynadiBut: {
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 8,
+    borderWidth: 1.5,
+    borderColor: 'rgba(76,175,80,0.4)',
+    borderRadius: 50,
+    paddingHorizontal: 22,
+    paddingVertical: 10,
+  },
+  oynadiButAktif: {
+    backgroundColor: '#4CAF50',
+    borderColor: '#4CAF50',
+  },
+  oynadiButYazi: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#4CAF50',
+  },
+  oynadiButYaziAktif: {
+    color: '#fff',
   },
 
   // ── Focus Mode Modal ──

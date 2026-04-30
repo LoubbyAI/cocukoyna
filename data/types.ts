@@ -6,16 +6,20 @@ export interface Aktivite {
   id: string;
   baslik: string;
   baslikEn?: string;
+  baslikRu?: string;
   emoji: string;
   yasGrubu: YasGrubu[];
   sure: number; // dakika
   kategori: Kategori;
   malzemeler: string[];
   malzemelerEn?: string[];
+  malzemelerRu?: string[];
   adimlar: string[];
   adimlarEn?: string[];
+  adimlarRu?: string[];
   ipucu?: string;
   ipucuEn?: string;
+  ipucuRu?: string;
   zorluk: 'kolay' | 'orta' | 'zor';
   renk: KartRenk;
   premium: boolean;

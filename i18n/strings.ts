@@ -89,6 +89,10 @@ const tr = {
   ana_bos_alt: 'Bu filtre için aktivite bulunamadı.',
   ana_filtre_temizle: 'Filtreyi temizle',
   kart_premium: 'PREMİUM',
+  kart_oynandi: 'Oynadık',
+  ana_bolum_oynananlar: 'Oynadıklarınız',
+  det_oynandi_but: 'Oynadık! ✓',
+  det_oynandi_geri: 'Geri al',
 
   // Favoriler ekranı
   fav_baslik: 'Favorilerim',
@@ -252,6 +256,10 @@ const en: Strings = {
   ana_bos_alt: 'No activities found for this filter.',
   ana_filtre_temizle: 'Clear filter',
   kart_premium: 'PREMIUM',
+  kart_oynandi: 'Played',
+  ana_bolum_oynananlar: 'Already played',
+  det_oynandi_but: 'We played it! ✓',
+  det_oynandi_geri: 'Undo',
 
   fav_baslik: 'My Favorites',
   fav_balon_var: (n: number) => `${n} favorite activities here! ❤️`,
@@ -407,6 +415,10 @@ const ru: Strings = {
   ana_bos_alt: 'Занятия для этого фильтра не найдены.',
   ana_filtre_temizle: 'Сбросить фильтр',
   kart_premium: 'PREMIUM',
+  kart_oynandi: 'Сыграно',
+  ana_bolum_oynananlar: 'Уже сыграно',
+  det_oynandi_but: 'Сыграли! ✓',
+  det_oynandi_geri: 'Отменить',
 
   fav_baslik: 'Мои избранные',
   fav_balon_var: (n: number) => `${n} избранных занятия здесь! ❤️`,

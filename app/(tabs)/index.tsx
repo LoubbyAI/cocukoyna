@@ -3,7 +3,6 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  FlatList,
   Image,
   ScrollView,
   StyleSheet,
@@ -33,7 +32,7 @@ const ZORLUK_DOLU: Record<string, number> = { kolay: 1, orta: 2, zor: 3 };
 export default function AktiviteListesi() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { secilenYas, favoriToggle, favorileMi } = useAktivite();
+  const { secilenYas, favoriToggle, favorileMi, oynananMi } = useAktivite();
   const { isPremium } = usePremium();
   const [secilenKategori, setSecilenKategori] = useState<Kategori | null>(null);
   const S = useStrings();
@@ -43,13 +42,13 @@ export default function AktiviteListesi() {
     if (secilenYas && !a.yasGrubu.includes(secilenYas)) return false;
     if (secilenKategori && a.kategori !== secilenKategori) return false;
     return true;
-  }).sort((a, b) => {
-    if (!isPremium) {
-      if (!a.premium && b.premium) return -1;
-      if (a.premium && !b.premium) return 1;
-    }
-    return 0;
   });
+
+  const freeUnplayed   = filtrelenmis.filter(a => !a.premium && !oynananMi(a.id));
+  const freePlayed     = filtrelenmis.filter(a => !a.premium && oynananMi(a.id));
+  const premiumItems   = filtrelenmis.filter(a => a.premium);
+  const unplayed       = filtrelenmis.filter(a => !oynananMi(a.id));
+  const played         = filtrelenmis.filter(a => oynananMi(a.id));
 
   const yasInfo = YAS_GRUPLARI.find(y => y.id === secilenYas);
 
@@ -62,17 +61,30 @@ export default function AktiviteListesi() {
     router.push(`/aktivite/${a.id}`);
   }
 
-  function renderAktivite({ item, index }: { item: Aktivite; index: number }) {
-    const tekKalan = filtrelenmis.length % 2 !== 0 && index === filtrelenmis.length - 1;
+  function renderSection(items: Aktivite[]) {
+    const rows = [];
+    for (let i = 0; i < items.length; i += 2) {
+      rows.push(
+        <View key={items[i].id} style={styles.satirlar}>
+          {renderKart(items[i])}
+          {items[i + 1] ? renderKart(items[i + 1]) : <View style={{ flex: 1 }} />}
+        </View>
+      );
+    }
+    return rows;
+  }
+
+  function renderKart(item: Aktivite) {
     const gradient = KART_GRADIENT[item.renk];
     const renkAna = KART_RENK[item.renk];
     const renkAcik = KART_RENK_ACIK[item.renk];
     const kilit = item.premium && !isPremium;
     const katInfo = KATEGORILER.find(k => k.id === item.kategori);
     const zorlukDolu = ZORLUK_DOLU[item.zorluk];
+    const oynandi = oynananMi(item.id);
 
     return (
-      <TouchableOpacity style={[styles.kart, tekKalan && styles.kartTekKalan]} onPress={() => aktiviteAc(item)} activeOpacity={0.82}>
+      <TouchableOpacity key={item.id} style={[styles.kart, oynandi && styles.kartOynandi]} onPress={() => aktiviteAc(item)} activeOpacity={0.82}>
         {/* 114px gradient üst alan */}
         <View style={styles.kartUst}>
           <LinearGradient
@@ -91,6 +103,13 @@ export default function AktiviteListesi() {
           >
             <Text style={{ fontSize: 18 }}>{favorileMi(item.id) ? '❤️' : '🤍'}</Text>
           </TouchableOpacity>
+
+          {/* Oynadık rozeti */}
+          {oynandi && (
+            <View style={styles.oynadiRozet}>
+              <Text style={styles.oynadiRozetYazi}>✓ {S.kart_oynandi}</Text>
+            </View>
+          )}
 
           {/* Büyük emoji */}
           <Text style={styles.kartEmoji}>{item.emoji}</Text>
@@ -229,15 +248,35 @@ export default function AktiviteListesi() {
           </TouchableOpacity>
         </View>
       ) : (
-        <FlatList
-          data={filtrelenmis}
-          keyExtractor={item => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.satirlar}
+        <ScrollView
           contentContainerStyle={styles.listeIcerik}
-          renderItem={renderAktivite}
           showsVerticalScrollIndicator={false}
-        />
+        >
+          {renderSection(isPremium ? unplayed : freeUnplayed)}
+          {isPremium ? (
+            played.length > 0 ? (
+              <>
+                <Text style={styles.bolumLbl}>{S.ana_bolum_oynananlar}</Text>
+                {renderSection(played)}
+              </>
+            ) : null
+          ) : (
+            <>
+              {freePlayed.length > 0 ? (
+                <>
+                  <Text style={styles.bolumLbl}>{S.ana_bolum_oynananlar}</Text>
+                  {renderSection(freePlayed)}
+                </>
+              ) : null}
+              {premiumItems.length > 0 ? (
+                <>
+                  <Text style={styles.bolumLbl}>{S.kart_premium}</Text>
+                  {renderSection(premiumItems)}
+                </>
+              ) : null}
+            </>
+          )}
+        </ScrollView>
       )}
     </View>
   );
@@ -383,13 +422,20 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 100,
   },
+  bolumLbl: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#888',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    marginTop: 16,
+    marginBottom: 8,
+    marginLeft: 2,
+  },
   satirlar: {
+    flexDirection: 'row',
     gap: 13,
     marginBottom: 13,
-  },
-  kartTekKalan: {
-    flex: 0,
-    width: '48%',
   },
   kart: {
     flex: 1,
@@ -403,6 +449,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.11,
     shadowRadius: 20,
     elevation: 6,
+  },
+  kartOynandi: {
+    opacity: 0.6,
+    borderColor: 'rgba(76,175,80,0.25)',
+  },
+  oynadiRozet: {
+    position: 'absolute',
+    top: 8,
+    left: 9,
+    backgroundColor: 'rgba(76,175,80,0.88)',
+    borderRadius: 50,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    zIndex: 3,
+  },
+  oynadiRozetYazi: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#fff',
   },
   kartUst: {
     height: 114,
